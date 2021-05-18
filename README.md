@@ -26,34 +26,53 @@ The module depends on the following software components:
 ### Command-line tools
 
 - terraform - v12
-- kubectl
+- ibmcloud
 
 ### Terraform providers
 
 - IBM Cloud provider >= 1.5.3
-- Helm provider >= 1.1.1 (provided by Terraform)
+- 
 
 ## Module dependencies
 
 This module makes use of the output from other modules:
 
-- Cluster - github.com/ibm-garage-cloud/terraform-ibm-container-platform.git
-- Namespace - github.com/ibm-garage-clout/terraform-cluster-namespace.git
-- etc
-
+- resource_group_name = "github.com/cloud-native-toolkit/terraform-ibm-resource-group.git"
 ## Example usage
 
 ```hcl-terraform
-module "dev_tools_argocd" {
-  source = "github.com/ibm-garage-cloud/terraform-tools-argocd.git?ref=v1.0.0"
-
-  cluster_config_file = module.dev_cluster.config_file_path
-  cluster_type        = module.dev_cluster.type
-  app_namespace       = module.dev_cluster_namespaces.tools_namespace_name
-  ingress_subdomain   = module.dev_cluster.ingress_hostname
-  olm_namespace       = module.dev_software_olm.olm_namespace
-  operator_namespace  = module.dev_software_olm.target_namespace
-  name                = "argocd"
+module "ibm_iam_account_settings" {
+  source = "github.com/ibm-garage-cloud/terraform-ibm-account-access-group?ref=v1.0.0"
+  resource_group_name = module.resource_group.name
+  region              = var.region  
+  ibmcloud_api_key    = var.ibmcloud_api_key
+  mfa = var.mfa  
+  restrict_create_service_id = var.restrict_create_service_id
+  restrict_create_platform_apikey = var.restrict_create_platform_apikey
 }
 ```
+
+
+Defines the MFA trait for the account. Valid values:
+
+    NONE - No MFA trait set
+    TOTP - For all non-federated IBMId users
+    TOTP4ALL - For all users
+    LEVEL1 - Email-based MFA for all users
+    LEVEL2 - TOTP-based MFA for all users
+    LEVEL3 - U2F MFA for all users
+
+
+
+Defines whether or not creating platform API and Service Id is access controlled. Valid values:
+
+    RESTRICTED - to apply access control
+    NOT_RESTRICTED - to remove access control
+    NOT_SET - to 'unset' a previous set value
+
+
+container registry plateform-matrics
+   --enable   Enable the setting for your account.
+   --disable  Disable the setting for your account.
+   --status   Display whether the setting is enabled for your account.
 
