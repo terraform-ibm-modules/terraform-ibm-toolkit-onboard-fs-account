@@ -1,11 +1,36 @@
 id: github.com/cloud-native-toolkit/terraform-ibm-onboard-fs-account
-name: ""
+name: ibm-onboard-fs-account
 type: terraform
-description: ""
+description: Module to set account-level values that enable FS computing
 tags:
-  - tools
-  - devops
+  - fscloud
+  - ibmcloud
+  - account
 versions:
+  - platforms: []
+    dependencies: []
+    variables:
+      - name: ibmcloud_api_key
+        scope: global
+        type: string
+        description: The api key for IBM Cloud access
+      - name: region
+        scope: global
+        type: string
+        description: The IBM Cloud region.
+      - name: action
+        type: string
+        description: 'USAGE: ibmcloud cr platform-metrics enable | disable'
+      - name: mfa
+        type: string
+        description: Defines the MFA trait for an account. Valid values are NONE No MFA trait set. TOTP For all non-federated IBM ID users TOTP4ALL For all users. LEVEL1 The Email based MFA for all users. LEVEL2 TOTP based MFA for all users. LEVEL3 U2F MFA for all users.
+      - name: restrict_create_service_id
+        type: string
+        description: Defines whether creating a service ID is access controlled. Valid values are RESTRICTED to apply access control. NOT_RESTRICTED to remove access control. NOT_SET to unset a previous set value.
+      - name: restrict_create_platform_apikey
+        type: string
+        description: Defines whether creating a API Key is access controlled. Valid values are RESTRICTED to apply access control. NOT_RESTRICTED to remove access control. NOT_SET to unset a previous set value.
+    version: v1.0.0
   - platforms:
       - kubernetes
       - ocp3
@@ -27,28 +52,3 @@ versions:
     #          version: ">= 1.6.0"
     variables: [{name: ibmcloud_api_key, type: string, description: The api key for IBM Cloud access}, {name: resource_group_name, type: string, description: The name of the IBM Cloud resource group.}, {name: region, type: string, description: The IBM Cloud region.}, {name: action, type: string, description: 'USAGE: ibmcloud cr platform-metrics enable | disable'}, {name: mfa, type: string, description: Defines the MFA trait for an account. Valid values are NONE No MFA trait set. TOTP For all non-federated IBM ID users TOTP4ALL For all users. LEVEL1 The Email based MFA for all users. LEVEL2 TOTP based MFA for all users. LEVEL3 U2F MFA for all users.}, {name: restrict_create_service_id, type: string, description: Defines whether creating a service ID is access controlled. Valid values are RESTRICTED to apply access control. NOT_RESTRICTED to remove access control. NOT_SET to unset a previous set value.}, {name: restrict_create_platform_apikey, type: string, description: Defines whether creating a API Key is access controlled. Valid values are RESTRICTED to apply access control. NOT_RESTRICTED to remove access control. NOT_SET to unset a previous set value.}]
     version: v0.0.0
-#    - name: cluster_type
-#      moduleRef:
-#        id: cluster
-#        output: type_code
-#    - name: cluster_ingress_hostname
-#      moduleRef:
-#        id: cluster
-#        output: ingress_hostname
-#    - name: cluster_config_file
-#      moduleRef:
-#        id: cluster
-#        output: config_file_path
-#    - name: tls_secret_name
-#      moduleRef:
-#        id: cluster
-#        output: tls_secret_name
-#    - name: releases_namespace
-#      moduleRef:
-#        id: namespace
-#        output: name
-#        discriminator: tools
-#    - name: icon_url
-#      moduleRef:
-#        id: dashboard
-#        output: base_icon_url
