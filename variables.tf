@@ -3,11 +3,6 @@ variable "ibmcloud_api_key" {
   description = "The api key for IBM Cloud access"
 }
 
-variable "resource_group_name" {
-  type        = string
-  description = "The name of the IBM Cloud resource group."
-}
-
 variable "region" {
   type        = string
   description = "The IBM Cloud region."

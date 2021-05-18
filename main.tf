@@ -18,7 +18,7 @@ Defines whether or not creating platform API and Service Id is access controlled
     NOT_SET - to 'unset' a previous set value
 
 */
-resource "ibm_iam_account_settings" "iam_account_settings_instance" {  
+resource ibm_iam_account_settings iam_account_settings_instance {
   mfa = var.mfa  
   restrict_create_service_id = var.restrict_create_service_id
   restrict_create_platform_apikey = var.restrict_create_platform_apikey
@@ -30,17 +30,12 @@ resource "ibm_iam_account_settings" "iam_account_settings_instance" {
    --disable  Disable the setting for your account.
    --status   Display whether the setting is enabled for your account.
 */
-resource null_resource print_names {
-provisioner "local-exec" {
-    command = <<COMMAND
-      ibmcloud login --apikey ${var.ibmcloud_api_key} -r ${var.region} -g ${var.resource_group_name} ; \      
-      ibmcloud cr platform-metrics --${var.action}         
-     COMMAND  
+resource null_resource platform_metrics {
+  provisioner "local-exec" {
+    command = "${path.module}/scripts/platform-metrics.sh ${var.region} ${var.action}"
+
+    environment = {
+      IBMCLOUD_API_KEY = var.ibmcloud_api_key
+    }
+  }
 }
-}
-
-
-
-
-
-
