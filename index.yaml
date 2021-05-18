@@ -1,0 +1,54 @@
+id: github.com/cloud-native-toolkit/terraform-ibm-onboard-fs-account
+name: ""
+type: terraform
+description: ""
+tags:
+  - tools
+  - devops
+versions:
+  - platforms:
+      - kubernetes
+      - ocp3
+      - ocp4
+    dependencies: []
+    #    - id: cluster
+    #      refs:
+    #        - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
+    #          version: ">= 1.7.0"
+    #        - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
+    #          version: ">= 2.0.0"
+    #    - id: namespace
+    #      refs:
+    #        - source: github.com/ibm-garage-cloud/terraform-k8s-namespace
+    #          version: ">= 2.1.0"
+    #    - id: dashboard
+    #      refs:
+    #        - source: github.com/ibm-garage-cloud/terraform-k8s-dashboard
+    #          version: ">= 1.6.0"
+    variables: [{name: ibmcloud_api_key, type: string, description: The api key for IBM Cloud access}, {name: resource_group_name, type: string, description: The name of the IBM Cloud resource group.}, {name: region, type: string, description: The IBM Cloud region.}, {name: action, type: string, description: 'USAGE: ibmcloud cr platform-metrics enable | disable'}, {name: mfa, type: string, description: Defines the MFA trait for an account. Valid values are NONE No MFA trait set. TOTP For all non-federated IBM ID users TOTP4ALL For all users. LEVEL1 The Email based MFA for all users. LEVEL2 TOTP based MFA for all users. LEVEL3 U2F MFA for all users.}, {name: restrict_create_service_id, type: string, description: Defines whether creating a service ID is access controlled. Valid values are RESTRICTED to apply access control. NOT_RESTRICTED to remove access control. NOT_SET to unset a previous set value.}, {name: restrict_create_platform_apikey, type: string, description: Defines whether creating a API Key is access controlled. Valid values are RESTRICTED to apply access control. NOT_RESTRICTED to remove access control. NOT_SET to unset a previous set value.}]
+    version: v0.0.0
+#    - name: cluster_type
+#      moduleRef:
+#        id: cluster
+#        output: type_code
+#    - name: cluster_ingress_hostname
+#      moduleRef:
+#        id: cluster
+#        output: ingress_hostname
+#    - name: cluster_config_file
+#      moduleRef:
+#        id: cluster
+#        output: config_file_path
+#    - name: tls_secret_name
+#      moduleRef:
+#        id: cluster
+#        output: tls_secret_name
+#    - name: releases_namespace
+#      moduleRef:
+#        id: namespace
+#        output: name
+#        discriminator: tools
+#    - name: icon_url
+#      moduleRef:
+#        id: dashboard
+#        output: base_icon_url
