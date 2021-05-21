@@ -1,23 +1,51 @@
-# Starter kit for a Terraform module
+# IBM Onboard FS account
 
-This is a Starter kit to help with the creation of Terraform modules. The basic structure of a Terraform module is fairly
-simple and consists of the following basic values:
+Module to automate the configuration of an IBM Cloud account with required FS settings. There are a number of settings required. There are a number of settings that need to be made on the account for FS compliance but currently only a subset of the settings can be automated. The list of settings and manual setup steps are provided below:
 
-- README.md - provides a description of the module
-- main.tf - defiens the logic for the module
-- variables.tf (optional) - defines the input variables for the module
-- outputs.tf (optional) - defines the values that are output from the module
+## Settings
 
-Beyond those files, any other content can be added and organized however you see fit. For example, you can add a `scripts/` directory
-that contains shell scripts executed by a `local-exec` `null_resource` in the terraform module. The contents will depend on what your
-module does and how it does it.
+### Account settings
 
-## Instructions for creating a new module
+https://cloud.ibm.com/account/settings
 
-1. Update the title and description in the README to match the module you are creating
-2. Fill out the remaining sections in the README template as appropriate
-3. Implement your logic in the in the main.tf, variables.tf, and outputs.tf
-4. Use releases/tags to manage release versions of your module
+- Financial Services Validated (**Manual**)
+- Virtual routing and forwarding (**Manual**)
+- Service endpoints (**Manual**)
+
+### IAM settings
+
+https://cloud.ibm.com/iam/settings
+
+- Multi-factor authentication (**Automated**)
+- Restrict user list visibility (**Manual**)
+- Restrict API key creation* (**Automated**)
+- Restrict service ID creation* (**Automated**)
+
+**Note**: When "Restrict API key creation" and "Restrict service ID creation" are enabled, the corresponding "User API key creator" and "Service ID creator" IAM policies will need to be assigned to users via an access group.
+
+## Manual setup steps
+
+### Financial Services Validated
+
+1. Open the Account Settings page - https://cloud.ibm.com/account/settings
+2. Click the **On** button for the "Financial Services Validated" section
+
+### Virtual routing and forwarding
+
+1. Open the Account Settings page - https://cloud.ibm.com/account/settings
+2. Click the **Create case** button under "Virtual routing and forwarding"
+3. Submit the case. (No other information is required in the case)
+
+### Service endpoints
+
+1. Open the Account Settings page - https://cloud.ibm.com/account/settings
+2. Once "Virtual routing and forwarding" has been enabled, the option to enable "Service endpoints" is available.
+3. Click the **On** button to turn service endpoints on.
+
+### Restrict user list visibility
+
+1. Open the IAM settings - https://cloud.ibm.com/iam/settings
+2. Click the toggle next to "Restrict user list visibility"
 
 ## Software dependencies
 
@@ -25,33 +53,30 @@ The module depends on the following software components:
 
 ### Command-line tools
 
-- terraform - v12
-- ibmcloud
+- terraform - v13
+- ibmcloud cli
 
 ### Terraform providers
 
-- IBM Cloud provider >= 1.5.3
-- 
+- IBM Cloud provider >= 1.18
 
 ## Module dependencies
 
-This module makes use of the output from other modules:
+- None
 
-- resource_group_name = "github.com/cloud-native-toolkit/terraform-ibm-resource-group.git"
 ## Example usage
 
 ```hcl-terraform
 module "ibm_iam_account_settings" {
-  source = "github.com/ibm-garage-cloud/terraform-ibm-account-access-group?ref=v1.0.0"
-  resource_group_name = module.resource_group.name
-  region              = var.region  
-  ibmcloud_api_key    = var.ibmcloud_api_key
-  mfa = var.mfa  
-  restrict_create_service_id = var.restrict_create_service_id
-  restrict_create_platform_apikey = var.restrict_create_platform_apikey
+   source = "github.com/ibm-garage-cloud/terraform-ibm-account-access-group"
+   
+   region              = var.region
+   ibmcloud_api_key    = var.ibmcloud_api_key
+   mfa = var.mfa
+   restrict_create_service_id = var.restrict_create_service_id
+   restrict_create_platform_apikey = var.restrict_create_platform_apikey
 }
 ```
-
 
 Defines the MFA trait for the account. Valid values:
 
