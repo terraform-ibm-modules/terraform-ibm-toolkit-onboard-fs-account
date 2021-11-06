@@ -7,6 +7,9 @@ tags:
     - account
 versions:
 - platforms: []
+  providers:
+    - name: ibm
+      source: "ibm-cloud/ibm"
   dependencies: []
   variables:
     - name: ibmcloud_api_key
