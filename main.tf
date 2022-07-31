@@ -10,6 +10,12 @@ Defines the MFA trait for the account. Valid values:
     LEVEL3 - U2F MFA for all users
 */
 
+module setup_clis {
+  source = "cloud-native-toolkit/clis/util"
+
+  clis = ["ibmcloud-cr"]
+}
+
 /*
 Defines whether or not creating platform API and Service Id is access controlled. Valid values:
 
@@ -36,6 +42,7 @@ resource null_resource platform_metrics {
 
     environment = {
       IBMCLOUD_API_KEY = var.ibmcloud_api_key
+      BIN_DIR = module.setup_clis.bin_dir
     }
   }
 }
