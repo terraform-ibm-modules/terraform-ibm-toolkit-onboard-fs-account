@@ -17,6 +17,10 @@ if [[ -z "${IBMCLOUD_API_KEY}" ]]; then
   exit 1
 fi
 
+if [[ -n "${BIN_DIR}" ]]; then
+  export PATH="${BIN_DIR}:${PATH}"
+fi
+
 ibmcloud login --apikey "${IBMCLOUD_API_KEY}" -r "${REGION}"
 
 echo "ap-north,ap-south,ca-tor,eu-central,global,jp-osa,uk-south,us-south" | tr "," "\n" | \
